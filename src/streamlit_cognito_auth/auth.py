@@ -343,27 +343,20 @@ class CognitoAuthenticatorBase(ABC):
         Returns:
             dict | None: The response from the UserInfo endpoint. Returns None if the Authenticator has not been assigned the 'domain' attribute.
         """
-
-        # Retrieve the cognito domain if it exists in self
         if hasattr(self, "domain"):
             userinfo_url = f"{self.domain}/oauth2/userInfo"
             headers = {
                 "Content-Type": "application/json;charset=UTF-8",
                 "Authorization": f"Bearer {self.get_credentials().access_token}",
             }
-
             resp = requests.get(userinfo_url, headers=headers)
-
             if include:
                 filtered = {k: v for k, v in resp.json().items() if k in include}
                 return filtered
-
             return resp.json()
-
         else:
             logging.warning("Instantiated Authenticator has not been assigned the 'domain' attribute")
             return None
-
 
 
 class CognitoAuthenticator(CognitoAuthenticatorBase):
