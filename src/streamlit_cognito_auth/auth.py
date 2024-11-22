@@ -623,7 +623,7 @@ class CognitoHostedUIAuthenticator(CognitoAuthenticatorBase):
         custom_button_func = None
     ) -> None:
         """Displays a login button. Defaults to standard st.link_button() with "Log in" displayed, 
-        but can be customized using the button_text and button_style arguments.
+        but can be customized using the button_text and custom_button_func arguments.
 
         Args:
             button_text (str, optional): The text to display on the login button. Defaults to "Login".
@@ -632,7 +632,7 @@ class CognitoHostedUIAuthenticator(CognitoAuthenticatorBase):
         """
 
         login_url = self.login_url(response_type=response_type)
-        if not button_style:
+        if not custom_button_func:
             st.link_button(button_text, login_url)
 
         else:
