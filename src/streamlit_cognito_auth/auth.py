@@ -620,7 +620,7 @@ class CognitoHostedUIAuthenticator(CognitoAuthenticatorBase):
         self,
         button_text: str = "Login",
         response_type: str = "code",
-        button_style = None
+        custom_button_func = None
     ) -> None:
         """Displays a login button. Defaults to standard st.link_button() with "Log in" displayed, 
         but can be customized using the button_text and button_style arguments.
@@ -628,7 +628,7 @@ class CognitoHostedUIAuthenticator(CognitoAuthenticatorBase):
         Args:
             button_text (str, optional): The text to display on the login button. Defaults to "Login".
             response_type (str, optional): The response type of the login request. Defaults to "code".
-            button_style (str, optional): Inline styling used for customizing the button when rendering it as markdown. Usefull for opening the button in a single page rather than a new tab e.g. <a> some_custom_config_here </a>. Defaults to None.
+            custom_button_func (str, optional): Inline styling used for customizing the button when rendering it as markdown. Usefull for opening the button in a single page rather than a new tab e.g. <a> some_custom_config_here </a>. Defaults to None.
         """
 
         login_url = self.login_url(response_type=response_type)
@@ -636,7 +636,7 @@ class CognitoHostedUIAuthenticator(CognitoAuthenticatorBase):
             st.link_button(button_text, login_url)
 
         else:
-            st.markdown(same_tab_button(button_text, login_url), unsafe_allow_html=True)
+            st.markdown(custom_button_func(button_text, login_url), unsafe_allow_html=True)
 
 
     def login_url(self, response_type: str = "code") -> str:
