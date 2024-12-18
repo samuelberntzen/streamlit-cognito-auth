@@ -607,8 +607,8 @@ class CognitoHostedUIAuthenticator(CognitoAuthenticatorBase):
             "Content-Type": "application/x-www-form-urlencoded",
             "Authorization": f"Basic {secret_hash}"
         }
-        resp = requests.post(token_url, params=payload, headers=headers)
-
+        resp = requests.post(token_url, data=payload, headers=headers)
+    
         if resp.status_code == requests.codes.bad_request:
             raise TokenVerificationException("Invalid authorization code: " + resp.text)
         else:
